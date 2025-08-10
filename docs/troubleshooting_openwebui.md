@@ -214,6 +214,39 @@ Use the memory tools to create an entity called "Test Entity".
 Use the filesystem tools to list my allowed directories.
 ```
 
+## Common Filesystem Errors
+
+### "Access Denied" Error
+```
+Access denied - path outside allowed directories: /home/ajlennon/mcp-service not in /home/ajlennon/mcp-service/files
+```
+
+**What this means:**
+- ✅ **Security is working correctly** - this is not a bug!
+- ❌ **Open WebUI tried to access a restricted path**
+- 🔧 **The filesystem server only allows access to**: `/home/ajlennon/mcp-service/files/`
+
+**How to fix:**
+1. **Always use full paths** in your prompts
+2. **Start all file paths with**: `/home/ajlennon/mcp-service/files/`
+3. **Example prompts that work**:
+   ```
+   ✅ List files in /home/ajlennon/mcp-service/files
+   ✅ Read /home/ajlennon/mcp-service/files/document.txt  
+   ✅ Create /home/ajlennon/mcp-service/files/notes.md with my thoughts
+   ✅ Move /home/ajlennon/mcp-service/files/old.txt to /home/ajlennon/mcp-service/files/new.txt
+   ```
+
+4. **Example prompts that DON'T work**:
+   ```
+   ❌ List files in my directory
+   ❌ Read document.txt
+   ❌ Create notes.md
+   ❌ Access /home/ajlennon/config.txt
+   ```
+
+**See also:** `docs/openwebui_filesystem_usage.md` for detailed usage instructions.
+
 ## Still Not Working?
 
 If none of the above works:

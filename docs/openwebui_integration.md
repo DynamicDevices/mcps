@@ -155,10 +155,12 @@ Show me all entities in my knowledge graph.
 
 **File Operations:**
 ```
-List all files in my workspace.
-Read the contents of README.md.
-Create a new file called "notes.txt" with my meeting notes.
+List all files in /home/ajlennon/mcp-service/files
+Read the contents of /home/ajlennon/mcp-service/files/README.md
+Create a new file called /home/ajlennon/mcp-service/files/notes.txt with my meeting notes
 ```
+
+⚠️ **IMPORTANT**: Always use **full paths** when working with filesystem tools. The filesystem server only allows access to `/home/ajlennon/mcp-service/files/` and will block any attempts to access parent directories.
 
 ## Advanced Configuration
 
