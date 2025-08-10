@@ -55,6 +55,11 @@ mcps/
 │   ├── claude_desktop_config.json    # Claude Desktop config
 │   ├── cline_mcp_settings.json       # VS Code/Cline config
 │   └── mcp_client_config.json        # Generic MCP client config
+├── server_config/                # Server configuration management
+│   ├── mcp-config.json               # Local copy of server config
+│   ├── server_notes.md               # Server setup documentation
+│   ├── sync_config.py                # Configuration sync tool
+│   └── README.md                     # Server management guide
 ├── examples/                     # Example scripts
 │   └── setup_auth.py                 # Interactive auth setup
 ├── docs/                         # Documentation
@@ -125,6 +130,21 @@ client.memory_create_entities([{
 directories = client.fs_list_allowed_directories()
 content = client.fs_read_text_file("/path/to/file.txt")
 ```
+
+## Server Configuration Management
+
+### Sync Configuration from Remote Server
+```bash
+python3 server_config/sync_config.py sync    # Sync from remote
+python3 server_config/sync_config.py list    # List current servers
+python3 server_config/sync_config.py status  # Check service status
+```
+
+### Server Details
+- **Host**: `ajlennon@ollama` (192.168.0.7:8000)
+- **Active Servers**: Memory, Time, Filesystem (3 servers)
+- **Configuration**: `/home/ajlennon/mcp-service/mcp-config.json`
+- **Service**: MCP Proxy (`mcpo`) with REST API exposure
 
 ## Testing
 
