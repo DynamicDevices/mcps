@@ -1,0 +1,20 @@
+{
+  "base_url": "http://192.168.0.7:8000",
+  "authentication": {
+    "type": "bearer",
+    "token": "YOUR_TOKEN_HERE",
+    "header_name": "Authorization",
+    "header_format": "Bearer {token}"
+  },
+  "endpoints": {
+    "memory": "/memory",
+    "time": "/time",
+    "filesystem": "/filesystem"
+  },
+  "docs": {
+    "main": "/docs",
+    "memory": "/memory/docs",
+    "time": "/time/docs",
+    "filesystem": "/filesystem/docs"
+  }
+}

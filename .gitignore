@@ -1,0 +1,84 @@
+# MCP Authentication Tokens and Secrets
+mcp_token.txt
+auth_token.txt
+*.key
+*.secret
+
+# Environment Variables Files
+.env
+.env.local
+.env.production
+.env.development
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv
+.ENV
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# OS Generated Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Personal Configuration Files (may contain sensitive data)
+personal_config.json
+local_config.json
+my_*.json
+
+# Test Output
+test_results/
+test_output/
+coverage/
+
+# Backup Files
+*.bak
+*.backup
+*~

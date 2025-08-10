@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "remote-mcp-server": {
+      "url": "http://192.168.0.7:8000/mcp",
+      "headers": {
+        "Content-Type": "application/json",
+        "User-Agent": "Claude-Desktop-MCP-Client"
+      },
+      "alwaysAllow": [],
+      "disabled": false
+    }
+  }
+}
