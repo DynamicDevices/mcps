@@ -63,6 +63,23 @@ http://192.168.0.7:8000
 "Authorization": "Bearer mcp-secret-key-1754822293"
 ```
 
+**⚠️ Service Path Configuration:**
+- **IMPORTANT**: MCP tools must be configured with individual paths to each service
+- You cannot combine multiple MCP services into a single tool configuration
+- Choose one approach:
+  
+  **Option A - Single Proxy (Recommended):**
+  ```
+  URL: http://192.168.0.7:8000
+  ```
+  
+  **Option B - Individual Services:**
+  ```
+  Time Service:       http://192.168.0.7:8000/time
+  Memory Service:     http://192.168.0.7:8000/memory
+  Filesystem Service: http://192.168.0.7:8000/filesystem
+  ```
+
 ### 4. Model Selection Issues
 
 **Check Your Model:**

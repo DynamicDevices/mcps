@@ -14,6 +14,8 @@ Open WebUI integrates with MCP servers through OpenAPI endpoints. Since your ser
 
 ## Step-by-Step Configuration
 
+⚠️ **IMPORTANT**: MCP tools in Open WebUI must be configured with **individual paths to each service**. You cannot combine multiple MCP services into a single tool configuration. Each service (Time, Memory, Filesystem) needs to be configured separately if you want granular control, or use the proxy URL that exposes all services through a single endpoint.
+
 ### 1. Access Open WebUI Admin Settings
 
 1. Log into Open WebUI as an administrator
@@ -22,7 +24,10 @@ Open WebUI integrates with MCP servers through OpenAPI endpoints. Since your ser
 
 ### 2. Add Your MCP Server
 
-Configure your MCP server with these settings:
+You have two configuration options:
+
+#### Option A: Single Proxy Configuration (Recommended)
+Configure one server that provides access to all tools:
 
 **Server Configuration:**
 - **Name**: `MCP Tools (Time, Memory, Filesystem)`
@@ -35,6 +40,48 @@ Configure your MCP server with these settings:
 {
   "name": "MCP Tools",
   "url": "http://192.168.0.7:8000",
+  "headers": {
+    "Authorization": "Bearer mcp-secret-key-1754822293",
+    "Content-Type": "application/json"
+  },
+  "enabled": true
+}
+```
+
+#### Option B: Individual Service Configuration
+If you need granular control, configure each service separately:
+
+**Time Service:**
+```json
+{
+  "name": "MCP Time Tools",
+  "url": "http://192.168.0.7:8000/time",
+  "headers": {
+    "Authorization": "Bearer mcp-secret-key-1754822293",
+    "Content-Type": "application/json"
+  },
+  "enabled": true
+}
+```
+
+**Memory Service:**
+```json
+{
+  "name": "MCP Memory Tools", 
+  "url": "http://192.168.0.7:8000/memory",
+  "headers": {
+    "Authorization": "Bearer mcp-secret-key-1754822293",
+    "Content-Type": "application/json"
+  },
+  "enabled": true
+}
+```
+
+**Filesystem Service:**
+```json
+{
+  "name": "MCP Filesystem Tools",
+  "url": "http://192.168.0.7:8000/filesystem", 
   "headers": {
     "Authorization": "Bearer mcp-secret-key-1754822293",
     "Content-Type": "application/json"

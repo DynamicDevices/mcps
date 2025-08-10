@@ -6,27 +6,40 @@ Based on testing and research, here are models that work with Open WebUI's MCP i
 
 ### ✅ **Recommended for GTX 1080 Ti (11GB VRAM)**
 
-#### **1. Hermes 2 Pro Models** (Best for Function Calling)
+#### **1. Hermes 3 Models** (Best Overall)
 ```bash
-# Install function-calling trained models
-ollama pull adrienbrault/nous-hermes2-11b-chat:q4_K_M    # ~6GB
-ollama pull adrienbrault/nous-hermes2-mixtral-8x7b:q4_K_M # ~8GB
+# Install the latest Hermes models with native function calling
+ollama pull hermes3:8b     # ~4.7GB - Best choice
+ollama pull hermes3:3b     # ~2.0GB - Lightweight option
+```
+
+**Why Hermes 3:**
+- ✅ **Latest generation** with improved function calling
+- ✅ **Native tool support** - no special fine-tuning needed
+- ✅ **Fits comfortably** on GTX 1080 Ti
+- ✅ **128K context** for complex conversations
+
+#### **2. Hermes 2 Pro Function Calling Specialist**
+```bash
+# Install models specifically trained for function calling
+ollama pull adrienbrault/nous-hermes2pro:Q4_0-tools    # ~3.5GB
+ollama pull adrienbrault/nous-hermes2pro:Q4_0          # ~3.5GB
 ```
 
 **Why Hermes 2 Pro:**
 - ✅ **Specifically trained** for function calling
-- ✅ **Works with Open WebUI** tools integration
-- ✅ **Fits on GTX 1080 Ti** with quantization
+- ✅ **Proven to work** with Open WebUI tools integration
+- ✅ **Lightweight** - fits easily on GTX 1080 Ti
 
-#### **2. CodeLlama Function Calling**
+#### **3. CodeLlama Function Calling**
 ```bash
 ollama pull codellama:7b-instruct-q4_K_M    # ~4GB
 ```
 
-#### **3. Llama 3.1 with Specific Function Calling Fine-tune**
+#### **4. Alternative Models** (If Above Don't Work)
 ```bash
-# This version is specifically fine-tuned for tools
-ollama pull bartowski/llama-3.1-8b-instruct-tool-use-gguf:Q4_K_M
+# Standard Hermes 2 models (older but reliable)
+ollama pull nous-hermes2:10.7b    # ~6.1GB
 ```
 
 ### **4. Alternative: Use Fireworks/Together AI Models**
@@ -48,7 +61,9 @@ If local models don't work, you can configure Open WebUI to use cloud models tha
 ### **For Local Models:**
 1. **Download a function-calling model**:
    ```bash
-   ollama pull adrienbrault/nous-hermes2-11b-chat:q4_K_M
+   ollama pull hermes3:8b
+   # OR for lighter option:
+   ollama pull adrienbrault/nous-hermes2pro:Q4_0-tools
    ```
 
 2. **Switch to the new model** in Open WebUI
@@ -96,10 +111,11 @@ I don't have a "get_current_time" tool available...
 - **Recommended**: v0.7.0+
 
 ### **3. Try Different Models**
-If Hermes 2 Pro doesn't work, try these in order:
-1. `codellama:7b-instruct-q4_K_M`
-2. Cloud model via Fireworks/Together
-3. Different Open WebUI version
+If your current model doesn't work, try these in order:
+1. `hermes3:8b` (best overall)
+2. `adrienbrault/nous-hermes2pro:Q4_0-tools` (function calling specialist)
+3. `codellama:7b-instruct-q4_K_M` (alternative)
+4. Cloud model via Fireworks/Together
 
 ### **4. Browser Debugging**
 - **Open Developer Tools** (F12)
@@ -111,9 +127,11 @@ If Hermes 2 Pro doesn't work, try these in order:
 
 | Model | Quantization | Memory | Function Calling |
 |-------|-------------|--------|------------------|
-| Hermes 2 Pro 11B | Q4_K_M | ~6GB | ✅ Excellent |
+| Hermes 3 8B | default | ~4.7GB | ✅ Excellent |
+| Hermes 3 3B | default | ~2.0GB | ✅ Good |
+| Hermes 2 Pro Tools | Q4_0 | ~3.5GB | ✅ Excellent |
 | CodeLlama 7B | Q4_K_M | ~4GB | ✅ Good |
-| Llama 3.1 8B Tool | Q4_K_M | ~5GB | ✅ Good |
+| Nous Hermes 2 10.7B | default | ~6.1GB | ⚠️ Limited |
 | Standard Llama 3.1 8B | Q4_K_M | ~5GB | ❌ Poor |
 
 ## Alternative: Direct MCP Python Client
