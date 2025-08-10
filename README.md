@@ -131,6 +131,32 @@ directories = client.fs_list_allowed_directories()
 content = client.fs_read_text_file("/path/to/file.txt")
 ```
 
+## Adding More MCP Servers
+
+Your setup currently includes **Memory**, **Time**, and **Filesystem** servers. You can add many more:
+
+### 🚀 **Quick Server Addition**
+```bash
+# List available servers
+python3 scripts/add_mcp_server.py list
+
+# Add a new server (example: web scraping)
+python3 scripts/add_mcp_server.py fetch
+
+# Add GitHub integration  
+python3 scripts/add_mcp_server.py github
+```
+
+### 📋 **Popular Server Options**
+- **🌐 Web & APIs**: `fetch`, `brave-search`, `puppeteer`
+- **💻 Development**: `github`, `gitlab`, `postman`  
+- **🗄️ Databases**: `sqlite`, `postgresql`
+- **☁️ Cloud**: `google-drive`, `aws`, `azure`
+- **💬 Communication**: `slack`, `discord`
+- **💰 Finance**: `alphavantage`, `stripe`
+
+See `docs/available_mcp_servers.md` for complete list and setup instructions.
+
 ## Server Configuration Management
 
 ### Sync Configuration from Remote Server
