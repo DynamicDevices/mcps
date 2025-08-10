@@ -41,7 +41,7 @@
 - **Package**: `@modelcontextprotocol/server-filesystem`
 - **Runtime**: Node.js (npx)
 - **Purpose**: Secure file operations
-- **Allowed Directory**: `/home/ajlennon/mcp-files`
+- **Allowed Directory**: `/home/ajlennon/mcp-service/files`
 - **Security**: Restricted to single directory for safety
 
 ## Network Access
@@ -55,7 +55,7 @@
 
 - **Authentication**: Bearer token (`mcp-secret-key-1754822293`)
 - **Authorization**: API key required for all endpoints
-- **File Access**: Restricted to `/home/ajlennon/mcp-files` only
+- **File Access**: Restricted to `/home/ajlennon/mcp-service/files` only
 - **Network**: No SSL/TLS (internal network usage)
 
 ## MCP Proxy (mcpo) Tool

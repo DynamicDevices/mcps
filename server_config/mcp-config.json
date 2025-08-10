@@ -10,7 +10,7 @@
     },
     "filesystem": {
       "command": "npx",
-      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/ajlennon/mcp-files"]
+      "args": ["-y", "@modelcontextprotocol/server-filesystem", "/home/ajlennon/mcp-service/files"]
     }
   }
 }
