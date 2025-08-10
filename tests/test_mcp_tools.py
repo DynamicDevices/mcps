@@ -3,6 +3,9 @@
 Test examples for MCP OpenAPI Proxy tools
 """
 
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 from mcp_authenticated_client import MCPAuthenticatedClient
 import json
 import time
