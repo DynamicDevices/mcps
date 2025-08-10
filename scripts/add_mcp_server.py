@@ -12,8 +12,8 @@ from pathlib import Path
 # Available servers with their configurations
 AVAILABLE_SERVERS = {
     "fetch": {
-        "command": "npx",
-        "args": ["-y", "@modelcontextprotocol/server-fetch"],
+        "command": "uvx",
+        "args": ["mcp-server-fetch"],
         "description": "Web scraping and API access",
         "requires_auth": False
     },
