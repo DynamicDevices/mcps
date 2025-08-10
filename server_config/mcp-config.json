@@ -26,6 +26,13 @@
       "args": [
         "mcp-server-fetch"
       ]
+    },
+    "openscad": {
+      "command": "/home/ajlennon/stable-diffusion-webui/venv/bin/python",
+      "args": ["/home/ajlennon/mcp-service/create_simple_openscad_server.py"],
+      "env": {
+        "VIRTUAL_ENV": "/home/ajlennon/stable-diffusion-webui/venv"
+      }
     }
   }
 }
