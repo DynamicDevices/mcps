@@ -64,6 +64,13 @@ AVAILABLE_SERVERS = {
         "args": ["-y", "@modelcontextprotocol/server-puppeteer"],
         "description": "Browser automation and web scraping",
         "requires_auth": False
+    },
+    "openscad": {
+        "command": "python",
+        "args": ["/path/to/OpenSCAD-MCP-Server/src/main.py"],
+        "description": "3D modeling and CAD operations with OpenSCAD",
+        "requires_auth": False,
+        "note": "Requires manual installation and OpenSCAD binary"
     }
 }
 

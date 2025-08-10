@@ -212,6 +212,25 @@ This guide shows you the MCP servers you can add to your existing setup. Each se
 **Capabilities:** User management, authentication flows  
 **Requires:** Auth0 credentials
 
+### 🔧 **3D Modeling & CAD**
+
+#### **OpenSCAD Server** ⭐ NEW!
+```json
+"openscad": {
+  "command": "python",
+  "args": ["/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/src/main.py"]
+}
+```
+**Capabilities:** 
+- 3D model generation from text descriptions
+- OpenSCAD code rendering to images/STL files
+- Parametric 3D modeling
+- CAD operations and design automation
+- STL export for 3D printing
+
+**Requires:** OpenSCAD binary, manual installation  
+**Setup Guide:** `docs/setup_openscad_server.md`
+
 ## How to Add New Servers
 
 ### 1. **Choose a Server** from the list above
@@ -277,6 +296,11 @@ Based on your current setup, I recommend adding these first:
 ### **💻 GitHub Server** (If you use GitHub)
 - Code repository management
 - Issue tracking and project management
+
+### **🔧 OpenSCAD Server** (3D modeling and CAD)
+- AI-powered 3D model generation
+- Parametric design automation
+- STL export for 3D printing
 
 ## Security Considerations
 
