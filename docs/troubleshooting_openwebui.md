@@ -247,6 +247,42 @@ Access denied - path outside allowed directories: /home/ajlennon/mcp-service not
 
 **See also:** `docs/openwebui_filesystem_usage.md` for detailed usage instructions.
 
+## Common Fetch Server Errors
+
+### "Failed to fetch URL - status code 502/503/504"
+```
+Failed to fetch https://somesite.com - status code 502
+```
+
+**What this means:**
+- ✅ **Your fetch server is working correctly**
+- ❌ **The target website is temporarily down or blocked**
+- 🌐 **Common HTTP error codes**:
+  - **502**: Bad Gateway (server is down/overloaded)
+  - **503**: Service Unavailable (maintenance)
+  - **504**: Gateway Timeout (slow response)
+
+**How to fix:**
+1. **Try a different URL** to verify fetch server works:
+   ```
+   Fetch the content from https://example.com
+   Get data from https://api.github.com/repos/octocat/Hello-World
+   ```
+
+2. **Check if the target site is accessible**:
+   ```bash
+   curl -I https://the-failing-url.com
+   ```
+
+3. **Wait and retry** - many sites have temporary issues
+
+4. **Use alternative endpoints** if available
+
+**Working examples for testing:**
+- `https://example.com` (always reliable)
+- `https://api.github.com/users/octocat` (GitHub API)
+- `https://www.iana.org/domains/example` (IANA documentation)
+
 ## Still Not Working?
 
 If none of the above works:
