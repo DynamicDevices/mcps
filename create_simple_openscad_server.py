@@ -92,67 +92,104 @@ async def call_tool(name: str, arguments: Dict[str, Any]) -> list[TextContent]:
 
 
 async def render_openscad_code(code: str, width: int = 512, height: int = 512) -> list[TextContent]:
-    """Render OpenSCAD code to PNG image."""
+    """Render OpenSCAD code to PNG image with improved headless support."""
     try:
         with tempfile.TemporaryDirectory() as temp_dir:
             # Write OpenSCAD code to temporary file
             scad_file = Path(temp_dir) / "model.scad"
             png_file = Path(temp_dir) / "model.png"
+            stl_file = Path(temp_dir) / "model.stl"
             
             with open(scad_file, 'w') as f:
                 f.write(code)
             
-            # Run OpenSCAD to render image (headless mode via environment)
-            cmd = [
+            # First validate by generating STL
+            stl_cmd = [
                 "openscad",
-                "--render",
-                "--imgsize", f"{width},{height}",
-                "-o", str(png_file),
+                "--export-format=binstl",
+                "-o", str(stl_file),
                 str(scad_file)
             ]
             
-            # Set environment for headless operation
-            env = os.environ.copy()
-            env['DISPLAY'] = ':99'  # Virtual display
-            env['QT_QPA_PLATFORM'] = 'offscreen'
-            
-            result = subprocess.run(
-                cmd, 
-                capture_output=True, 
-                text=True, 
-                timeout=30,
-                env=env
+            stl_result = subprocess.run(
+                stl_cmd,
+                capture_output=True,
+                text=True,
+                timeout=60
             )
             
-            if result.returncode != 0:
+            if stl_result.returncode != 0:
                 return [TextContent(
                     type="text",
-                    text=f"❌ OpenSCAD rendering failed:\n{result.stderr}"
+                    text=f"❌ OpenSCAD model compilation failed:\n{stl_result.stderr}"
                 )]
             
-            if png_file.exists():
-                # Copy to persistent location
-                output_dir = Path("/home/ajlennon/mcp-service/files")
-                output_dir.mkdir(exist_ok=True)
+            # Use xvfb-run for reliable PNG rendering on headless server
+            png_cmd = [
+                "xvfb-run", "-a",
+                "openscad", 
+                "--imgsize", f"{width},{height}", 
+                "--viewall", 
+                "--autocenter", 
+                "-o", str(png_file), 
+                str(scad_file)
+            ]
+            
+            # Render PNG using xvfb-run
+            try:
+                result = subprocess.run(
+                    png_cmd,
+                    capture_output=True,
+                    text=True,
+                    timeout=60
+                )
                 
-                output_file = output_dir / f"openscad_render_{width}x{height}.png"
+                png_success = (result.returncode == 0 and 
+                             png_file.exists() and 
+                             png_file.stat().st_size > 100)
+                last_error = result.stderr if result.stderr else "No error output"
+                
+            except Exception as e:
+                png_success = False
+                last_error = str(e)
+            
+            # Prepare output
+            output_dir = Path("/home/ajlennon/mcp-service/files")
+            output_dir.mkdir(exist_ok=True)
+            
+            import time
+            timestamp = int(time.time())
+            
+            if png_success:
                 import shutil
-                shutil.copy2(png_file, output_file)
+                output_png = output_dir / f"render_{timestamp}_{width}x{height}.png"
+                output_stl = output_dir / f"render_{timestamp}.stl"
+                
+                shutil.copy2(png_file, output_png)
+                shutil.copy2(stl_file, output_stl)
                 
                 return [TextContent(
                     type="text",
-                    text=f"✅ OpenSCAD code rendered successfully!\n📁 Output: {output_file}\n📐 Size: {width}x{height}"
+                    text=f"✅ OpenSCAD rendering successful!\n📸 PNG: {output_png}\n📁 STL: {output_stl}\n📐 Size: {width}x{height}"
                 )]
             else:
+                # Fallback: provide STL and error info
+                import shutil
+                output_stl = output_dir / f"model_{timestamp}.stl"
+                shutil.copy2(stl_file, output_stl)
+                
                 return [TextContent(
-                    type="text", 
-                    text="❌ Rendering completed but no output file was generated"
+                    type="text",
+                    text=f"⚠️  PNG rendering failed\n" +
+                         f"✅ STL generated: {output_stl}\n" +
+                         f"🔧 Error details: {last_error[:200]}...\n" +
+                         f"💡 Try using the STL file in a 3D viewer or CAD software"
                 )]
                 
     except subprocess.TimeoutExpired:
         return [TextContent(
             type="text",
-            text="❌ OpenSCAD rendering timed out (30 seconds)"
+            text="❌ OpenSCAD rendering timed out"
         )]
     except Exception as e:
         return [TextContent(
