@@ -66,11 +66,11 @@ AVAILABLE_SERVERS = {
         "requires_auth": False
     },
     "openscad": {
-        "command": "python",
-        "args": ["/path/to/OpenSCAD-MCP-Server/src/main.py"],
+        "command": "/home/ajlennon/stable-diffusion-webui/venv/bin/python",
+        "args": ["/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/src/main.py"],
         "description": "3D modeling and CAD operations with OpenSCAD",
         "requires_auth": False,
-        "note": "Requires manual installation and OpenSCAD binary"
+        "note": "Uses existing Stable Diffusion venv, requires OpenSCAD binary"
     }
 }
 

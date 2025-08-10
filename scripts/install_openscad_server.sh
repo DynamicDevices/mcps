@@ -6,6 +6,8 @@ set -e  # Exit on any error
 
 echo "🔧 Installing OpenSCAD MCP Server"
 echo "=================================="
+echo "ℹ️  This installer will reuse your existing Stable Diffusion WebUI"
+echo "   virtual environment to save space and avoid conflicts."
 
 # Check if running on the correct server
 if [ "$(hostname)" != "ollama" ]; then
@@ -47,15 +49,27 @@ fi
 
 cd OpenSCAD-MCP-Server
 
-# Step 3: Set up Python virtual environment
+# Step 3: Use existing Stable Diffusion virtual environment
 echo ""
-echo "🐍 Step 3: Setting up Python environment..."
-if [ ! -d "venv" ]; then
-    echo "   Creating virtual environment..."
-    python3 -m venv venv
-    echo "   ✅ Virtual environment created"
+echo "🐍 Step 3: Using Stable Diffusion virtual environment..."
+STABLE_DIFFUSION_VENV="/home/ajlennon/stable-diffusion-webui/venv"
+
+if [ -d "$STABLE_DIFFUSION_VENV" ]; then
+    echo "   ✅ Found Stable Diffusion virtual environment"
+    echo "   📂 Location: $STABLE_DIFFUSION_VENV"
+    
+    # Create symbolic link to the existing venv
+    if [ ! -L "venv" ] && [ ! -d "venv" ]; then
+        ln -s "$STABLE_DIFFUSION_VENV" venv
+        echo "   🔗 Created symbolic link to existing venv"
+    else
+        echo "   ✅ Virtual environment link already exists"
+    fi
 else
-    echo "   ✅ Virtual environment already exists"
+    echo "   ⚠️  Stable Diffusion venv not found at $STABLE_DIFFUSION_VENV"
+    echo "   Creating new virtual environment as fallback..."
+    python3 -m venv venv
+    echo "   ✅ New virtual environment created"
 fi
 
 # Activate virtual environment and install dependencies
@@ -110,10 +124,10 @@ echo "   nano /home/ajlennon/mcp-service/mcp-config.json"
 echo ""
 echo "   Add this server block:"
 echo '   "openscad": {'
-echo '     "command": "python",'
+echo '     "command": "/home/ajlennon/stable-diffusion-webui/venv/bin/python",'
 echo '     "args": ["/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/src/main.py"],'
 echo '     "env": {'
-echo '       "VIRTUAL_ENV": "/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/venv"'
+echo '       "VIRTUAL_ENV": "/home/ajlennon/stable-diffusion-webui/venv"'
 echo '     }'
 echo '   }'
 echo ""

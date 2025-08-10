@@ -54,16 +54,26 @@ git clone https://github.com/jhacksman/OpenSCAD-MCP-Server.git
 cd OpenSCAD-MCP-Server
 ```
 
-### 2. Set Up Python Environment
+### 2. Use Existing Stable Diffusion Environment
+
+Since you already have Stable Diffusion WebUI set up, we'll use its virtual environment to save space and avoid conflicts:
 
 ```bash
-# Create virtual environment
-python3 -m venv venv
+# Use existing Stable Diffusion virtual environment
+ln -s /home/ajlennon/stable-diffusion-webui/venv venv
+
+# Activate the environment
 source venv/bin/activate
 
-# Install dependencies
+# Install OpenSCAD-specific dependencies
 pip install -r requirements.txt
 ```
+
+**Benefits of reusing the environment:**
+- ✅ Saves disk space 
+- ✅ Avoids package conflicts
+- ✅ Leverages existing ML libraries
+- ✅ Faster setup
 
 ### 3. Configure API Keys (Optional)
 
@@ -110,10 +120,10 @@ Add this server configuration:
     "filesystem": { ... existing ... },
     "fetch": { ... existing ... },
     "openscad": {
-      "command": "python",
+      "command": "/home/ajlennon/stable-diffusion-webui/venv/bin/python",
       "args": ["/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/src/main.py"],
       "env": {
-        "VIRTUAL_ENV": "/home/ajlennon/mcp-service/OpenSCAD-MCP-Server/venv"
+        "VIRTUAL_ENV": "/home/ajlennon/stable-diffusion-webui/venv"
       }
     }
   }
